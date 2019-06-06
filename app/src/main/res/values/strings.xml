@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Zeus Operations</string>
+    <string name="tab_text_1">Members</string>
+    <string name="tab_text_2">Events</string>
+    <string name="member_attendance"><b>Attendance:</b></string>
+    <string name="member_country"><b>Country:</b></string>
+    <string name="event_attendance"><b>Attendance:</b></string>
+</resources>
