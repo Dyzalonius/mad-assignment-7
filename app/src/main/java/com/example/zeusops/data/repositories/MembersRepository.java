@@ -1,5 +1,6 @@
 package com.example.zeusops.data.repositories;
 
+import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 
 import com.example.zeusops.data.database.MemberDao;
@@ -22,11 +23,19 @@ public class MembersRepository {
         database = ZeusopsRoomDatabase.getDatabase(context);
         dao = database.memberDao();
         members = new ArrayList<>();
-        fetchMembers();
     }
 
     public List<Member> getMembers() {
         return members;
+    }
+
+    public void insert(final Member member) {
+        mExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                dao.insert(member);
+            }
+        });
     }
 
     public void insertList(final List<Member> members) {
@@ -65,6 +74,12 @@ public class MembersRepository {
                 members = dao.getAllMembers();
             }
         });
+    }
+
+    public List<Member> fetchMembersSync() {
+        List<Member> members = dao.getAllMembers();
+        this.members = members;
+        return members;
     }
 
     public Member findMember(int id) {

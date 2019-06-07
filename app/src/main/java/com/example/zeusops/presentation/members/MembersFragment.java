@@ -67,6 +67,7 @@ public class MembersFragment extends Fragment implements RecyclerView.OnItemTouc
                 View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
                 if (child != null) {
                     int adapterPosition = recyclerView.getChildAdapterPosition(child);
+                    membersViewModel.fetchMembers();
                     Member member = membersAdapter.members.get(adapterPosition);
                     Intent intent = new Intent(getContext(), MemberActivity.class);
                     intent.putExtra("member", member);

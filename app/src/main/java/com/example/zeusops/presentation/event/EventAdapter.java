@@ -42,6 +42,7 @@ public class EventAdapter extends RecyclerView.Adapter<MemberViewHolder> {
 
     public void updateMembers(List<Member> members) {
         this.members.clear();
+        System.out.println(members.size());
         this.members.addAll(members);
         notifyDataSetChanged();
     }

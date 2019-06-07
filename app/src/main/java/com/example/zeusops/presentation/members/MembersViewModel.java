@@ -23,6 +23,7 @@ public class MembersViewModel extends ViewModel {
 
     public MembersViewModel(Context context) {
         membersRepository = new MembersRepository(context);
+        membersRepository.fetchMembers();
     }
 
     public void getMembers() {
@@ -65,11 +66,15 @@ public class MembersViewModel extends ViewModel {
                 double attendance = Double.parseDouble(columns.getJSONObject(7).getString("v"));
                 Member newMember = new Member(r, name, rank, country, attendance);
                 members.add(newMember);
+                membersRepository.insert(newMember);
             }
-            membersRepository.insertList(members);
             this.members.postValue(members);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public void fetchMembers() {
+        membersRepository.fetchMembers();
     }
 }

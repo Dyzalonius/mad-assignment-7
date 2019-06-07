@@ -12,27 +12,29 @@ import java.util.List;
 
 public class EventViewModel extends ViewModel {
 
+    public MutableLiveData<List<Member>> attendees;
     public MutableLiveData<List<Member>> members;
     private MembersRepository membersRepository;
 
     public EventViewModel(Context context) {
         membersRepository = new MembersRepository(context);
+        members = new MutableLiveData<>();
+        attendees = new MutableLiveData<>();
+    }
+
+    public void fetchMembers() {
+        members.postValue(membersRepository.fetchMembersSync());
     }
 
     public void getAttendees(String attendeesString) {
-        List<Integer> attendeeIds = new ArrayList<>();
-        for (String attendee: attendeesString.split(" ")) {
-            attendeeIds.add(Integer.parseInt(attendee));
-        }
-        System.out.println("attendees ids: " + attendeeIds.size());
         List<Member> attendees = new ArrayList<>();
-        for (int id : attendeeIds) {
-            Member member = membersRepository.findMember(id);
-            System.out.println(member);
+
+        for (String attendee: attendeesString.split(" ")) {
+            Member member = membersRepository.findMember(Integer.parseInt(attendee));
             if (member != null) {
                 attendees.add(member);
             }
         }
-        this.members.postValue(attendees);
+        this.attendees.postValue(attendees);
     }
 }
